@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0px;
+}
+header {
+    background: #006c8c;
+    height: 50px;
+    position: relative;
+    border-top: 5px solid #004d64;
+}
+.container {
+    padding: 10px 10px;
+    width: 900px;
+    margin: 0px auto;
+}
+h1 {
+    font-weight: normal;
+    font-size: 36px;
+}
+pre {
+    border: 1px solid #EEE;
+    padding: 5px;
+    border-radius: 5px;
+}

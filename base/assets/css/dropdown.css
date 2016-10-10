@@ -1,0 +1,20 @@
+.dropdown_container {
+    position: absolute;
+
+    border: 1px solid #aaa;
+    background: white;
+
+    height: 100px;
+    overflow: auto;
+}
+
+.dropdown_container .dropdown_option {
+    padding: 2px 5px;
+    background: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.dropdown_option:hover {
+    background-color: #FF8080;
+}

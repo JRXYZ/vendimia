@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+use Vendimia\Console;
+if (!defined ("VENDIMIA_BASE_INCLUDED")) {
+    
+    // Pre-sanity check
+    $base_path = 'vendimia/';
+    if (getenv('VENDIMIA_BASE_PATH')) {
+        $base_path = getenv('VENDIMIA_BASE_PATH') . '/';
+    }
+
+    $base_file = $base_path . 'bin/base.php';
+    if (stream_resolve_include_path($base_file) === false) {
+        exit("FATAL: Cannot find the Vendimia installation path. Check the 'include_path' setting in php.ini or the VENDIMIA_BASE_PATH environment variable.\n");
+    }
+
+    require $base_file;
+}
+
+if (bin::$script_name) {
+    $script = bin::$script_name;
+    require Vendimia\BASE_PATH . "/bin/vendimia-$script.php";
+} else {
+    $modules = [
+        'init' => 'Create a new Vendimia project.',
+        'new' => 'Creates new elements for an existing Vendimia project, like apps.',
+        'server' => 'Run a stand-alone development server.',
+        'shell' => 'Starts a Vendimia evaluative PHP shell.',
+        'syncdb' => 'Syncronize table definitions from apps with the database.'
+    ];
+
+    bin::writeHeader();
+    console::write('Available modules:' . PHP_EOL);
+    bin::writeFancyDefinitions($modules);
+    echo PHP_EOL . PHP_EOL;
+    console::write('Use {white Vendimia [module] --help} for more module information.');
+    echo PHP_EOL;
+}
