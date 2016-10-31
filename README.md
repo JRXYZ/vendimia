@@ -1,6 +1,6 @@
 # Vendimia Framework
 
-[![Join the chat at https://gitter.im/vendimia/vendimia](https://badges.gitter.im/vendimia/vendimia.svg)](https://gitter.im/vendimia/vendimia?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/vendimia](https://badges.gitter.im/vendimia/vendimia.svg)](https://gitter.im/vendimia)
 
 **Vendimia** is a PHP framework for fast developing web applications using the MVC design pattern.
 
