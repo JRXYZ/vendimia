@@ -66,7 +66,7 @@ foreach ($argv as $arg) {
     if (!defined("Vendimia\\Database\\Fields::$type")) {
         Console::fail("'$type' is an invalid data base field.");
     }
-    $def  = "    public \$$name = [Fields::$type,\n";
+    $def  = "    var \$$name = [Fields::$type,\n";
     $def .= "        // Options for field '$name'\n";
     $def .= "\n";
     $def .= "    ];";
