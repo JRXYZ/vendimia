@@ -384,7 +384,7 @@ abstract class ControlAbstract implements ValueInterface {
 	 * Shortcut to getValue(), acessing this control as string.
 	 */
 	public function __toString() {
-        return $this->getValue();
+        return (string)$this->getValue();
 	}
 
     /**
