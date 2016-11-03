@@ -23,7 +23,7 @@ if (is_callable( $this['_vendimia_page_title_callable'])) {
 $this->html->addMeta('charset', 'utf-8');
 
 // Token de seguridad
-$this->html->addMeta(['Vendimia-security-token' => Vendimia\Csrf::$token]);
+$this->html->addMeta(['vendimia-security-token' => Vendimia\Csrf::$token]);
 
 // Assets por defecto
 $this->html->addDefaultAssets($this->name);
