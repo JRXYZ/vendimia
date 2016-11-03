@@ -14,7 +14,7 @@ $inception = $class == 'Vendimia\\Inception';
         header {background: #006c8c;border-top: 5px solid #004d64; font-size: 18px; padding: 20px; color: white;}
         main {padding: 10px;}
         div.titulo {font-size: 110%; margin-bottom: 10px;}
-        div.mensaje {font-size: 80%;}
+        div.mensaje {font-size: 80%; font-family: monospace;}
         li.traza {margin-bottom: 5px; margin-left:20px;font-family:monospace; padding: 5px; cursor: pointer;}
         div.traza:hover {background: #F8F8F8;}
         div.traza_fichero {font-weight:bold;}

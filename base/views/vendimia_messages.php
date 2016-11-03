@@ -15,10 +15,10 @@ if ($messages) {
             $ico = 'unknow'; break;
         }
 
-        $html_messages .= '<div class="Vendimia_message ' . $ico . '">' . $message['message'] . "</div>\n";
+        $html_messages .= '<div class="vendimia_message ' . $ico . '">' . $message['message'] . "</div>\n";
     }
 
-    echo Vendimia\Html\Tag::div(['class'=>'Vendimia_message_container'], $html_messages)
+    echo Vendimia\Html\Tag::div(['class'=>'vendimia_message_container'], $html_messages)
         ->noEscapeContent();
 
     // Clear the messages from the session
