@@ -24,12 +24,12 @@ class Callback extends ValidatorAbstract
         $callback = $this->args['callback'];
 
         if (is_string($callback)) {
-            if (!method_exists($this->control->form, $callback))) {
+            if (!method_exists($this->control->getForm(), $callback)) {
                 $this->addMessage('error');
                 return false;
             }
 
-            $return = $this->control->form->$callback($this->control);
+            $return = $this->control->getForm()->$callback($this->control);
 
             if ($return === true) {
                 return true;
@@ -37,7 +37,6 @@ class Callback extends ValidatorAbstract
                 $this->addMessage($return);
                 return false;
             }
-
         }
     }
 }

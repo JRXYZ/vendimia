@@ -5,6 +5,7 @@ namespace Vendimia\Form;
 use Vendimia;
 use Vendimia\Html;
 use Vendimia\CsrfInterface;
+use Vendimia\AsArrayInterface;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -32,7 +33,7 @@ use ReflectionProperty;
  *
  * @author Oliver Etchebarne
  */
-class Form 
+class Form implements AsArrayInterface
 {
     /** This form ID */
     private $id;
@@ -271,6 +272,10 @@ class Form
         $res = [];
         foreach ($this->controls as $control) {
             $control = $this->$control;
+
+            if (!$control->enabled) {
+                continue;
+            }
 
             // Si el control tiene field_name, lo usamos en vez de su nombre
             if ($control->field_name) {
@@ -604,5 +609,9 @@ class Form
         $this->controls [ $control ]->set ( $value );
     }*/
 
+    public function asArray()
+    {
+        return $this->getValues();
+    }
 
 }

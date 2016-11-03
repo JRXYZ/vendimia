@@ -8,9 +8,14 @@ class Checkbox extends ControlAbstract {
         'style' => 'normal',  // 'flat' dibuja el label al lado del widget
     ];
 
-    function set($value) 
+    function setValue($value) 
     {
         $this->value = (bool)$value;
+    }
+
+    public function getValue()
+    {
+        return (bool)$this->value;
     }
 
     function draw() 
