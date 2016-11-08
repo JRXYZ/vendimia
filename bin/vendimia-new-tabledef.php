@@ -48,7 +48,7 @@ foreach ($constants as $name => $c) {
 }
 
 // Sacamos los campos de los argumentos, si hay
-$fielddef = '   // Write here the field definitions for ' . bin::$module->element;
+$fielddef = '    // Write here the field definitions for "' . bin::$module->element . '".';
 
 $fielddefs = []; 
 foreach ($argv as $arg) {
@@ -95,6 +95,7 @@ class $classname extends Tabledef
     /*
     static \$table_name = 'a_nice_table_name';
     /**/
+
 $fielddef
 }
 EOF;

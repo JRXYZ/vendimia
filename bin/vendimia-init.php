@@ -168,7 +168,7 @@ $webroot_config
         'username' => 'oliver',
         'password' => 'pikachu123',
         'host' => 'localhost',
-        'database' => 'Vendimia_database',
+        'database' => 'vendimia_database',
     ],
 ],
 /**/
