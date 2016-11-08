@@ -19,7 +19,13 @@ if (!defined ("VENDIMIA_BASE_INCLUDED")) {
 
 if (bin::$script_name) {
     $script = bin::$script_name;
-    require Vendimia\BASE_PATH . "/bin/vendimia-$script.php";
+    $script_path = Vendimia\BASE_PATH . "/bin/vendimia-$script.php";
+    
+    if (!file_exists($script_path)) {
+        console::fail("Invalid '$script' module.");
+    }
+    
+    require $script_path;
 } else {
     $modules = [
         'init' => 'Create a new Vendimia project.',
