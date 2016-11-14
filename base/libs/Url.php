@@ -28,8 +28,12 @@ class Url
         }
 
         $matches = [];
-        if (preg_match ('/^(.+):\/\//', $first_part, $matches)) {
-            $this->schema = $matches[1];
+        if (preg_match ('<^.+://|^//>', $first_part, $matches)) {
+            
+            // Removemos el último slash, por que será añadido
+            // al unir todas las partes
+            $this->schema = substr($matches[0], 0, strlen($matches[0]) - 1);
+            
             $first_part = substr($first_part, strlen($matches[0]));
         }
 
@@ -97,7 +101,7 @@ class Url
         if ($this->schema) {
             // Absoluto
             //$url = 
-            array_unshift($this->parts, $this->schema . ':/');
+            array_unshift($this->parts, $this->schema);
             
         } else {
             // Relativo
