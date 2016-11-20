@@ -48,11 +48,6 @@ if (PHP_SAPI == 'cli-server' ) {
         session_save_path ('tmp');
 }
 
-// No iniciamos la sesión si venimos por la CLI
-if ( Vendimia::$execution_type != 'cli') {
-    session_start();
-}
-
 // Cargamos las librerías en Vendimia::SETTINGS['autoload']
 if ( isset ( Vendimia::$settings['autoload']) ) {
     foreach ( Vendimia::$settings['autoload'] as $pl ) {
