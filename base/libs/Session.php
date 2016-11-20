@@ -4,52 +4,22 @@ namespace Vendimia;
 use Vendimia;
 
 /**
- * Handle session variables for this project
+ * Session variables handler
  */
-class Session {
-    
-    /**
-     * Session token, used for distinguish this app from another running on
-     * this same host.
-     */
-    public $token = '';
-
+class Session extends MutableCollection {
     function __construct()
     {
+        // Creamos un session_id en base del proyecto.
+        $session_id = md5(Vendimia::$settings['APPID']
+            . $_SERVER['HTTP_HOST']);
 
-        // Usamos el ID de la sesión para generar un código de sesión
-        $this->token = hash_hmac ( 'sha256', 
-            session_id(),
-            Vendimia::$settings['APPID']);
+        // No iniciamos la sesión si venimos por la CLI
+        if (Vendimia::$execution_type != 'cli') {
+            session_id($session_id);
+            session_start();
+        }
 
-        // Enviamos el token como cookie al usuario
-        /*if ( Vendimia::$EXECUTION_TYPE != 'CLI') {
-            setcookie("Vendimia-session-token", $this->token, 0, Vendimia::$base_url);
-        }*/
-        
-    }
-
-    /**
-     * "Getter"
-     */
-    function __get($var) 
-    {
-        return ifset($_SESSION[$this->token][$var]);
-    }
-
-    /**
-     * "Setter"
-     */
-    function __set($var, $val)
-    {
-        $_SESSION[$this->token][$var] = $val;
-    }
-
-    /**
-     * "Unsetter"
-     */
-    function __unset ($var)
-    {
-        unset ( $_SESSION[$this->token][$var] );
+        parent::__construct();
+        $this->setArrayByRef($_SESSION);
     }
 }
