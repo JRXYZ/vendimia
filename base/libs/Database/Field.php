@@ -4,7 +4,7 @@ namespace Vendimia\Database;
 /**
  * Vendimia database field types representation 
  */
-class Fields
+class Field
 {
     // Integers
     const Bool = 1;

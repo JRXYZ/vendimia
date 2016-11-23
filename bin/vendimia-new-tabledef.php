@@ -42,7 +42,7 @@ $baseapp = Vendimia\Path\join(bin::$project_path, 'db');
 
 // AISH PHP... Sacamos todos los tipos de campos en minúscula...
 $lcase = [];
-$constants = (new \ReflectionClass('Vendimia\\Database\\Fields'))->getConstants();
+$constants = (new \ReflectionClass('Vendimia\\Database\\Field'))->getConstants();
 foreach ($constants as $name => $c) {
     $lcase[strtolower($name)] = $name;
 }
@@ -63,10 +63,10 @@ foreach ($argv as $arg) {
     }
     $type = $lcase[strtolower($type)];
     
-    if (!defined("Vendimia\\Database\\Fields::$type")) {
+    if (!defined("Vendimia\\Database\\Field::$type")) {
         Console::fail("'$type' is an invalid data base field.");
     }
-    $def  = "    var \$$name = [Fields::$type,\n";
+    $def  = "    var \$$name = [Field::$type,\n";
     $def .= "        // Options for field '$name'\n";
     $def .= "\n";
     $def .= "    ];";
@@ -87,7 +87,7 @@ $file = <<<EOF
 namespace $namespace\\db;
 
 use Vendimia\\Database\\Tabledef;
-use Vendimia\\Database\\Fields;
+use Vendimia\\Database\\Field;
 
 class $classname extends Tabledef
 {
