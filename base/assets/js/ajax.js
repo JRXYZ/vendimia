@@ -8,7 +8,7 @@ V.ajax = {
     /**
      * Shows a message using #vendimia_ajax_message or window.alert() 
      */
-	message: function (message, title = '')
+    message: function (message, title = '')
     {
 	    div = V.id('vendimia_ajax_message');
 
@@ -27,16 +27,16 @@ V.ajax = {
 	    div.style.display = 'block';
 	    
 	    div.innerHTML = msg;
-	},
+    },
 
     /**
      * Shows a exception in debug mode
      */
-     exception: function(data) {
+    exception: function(data) {
         // TODO
         console.log(data)
         window.alert("EXCEPTION")
-     },
+    },
 
     /** 
      * Enables o disables the #vendimia_ajax_progress element.
@@ -102,7 +102,7 @@ V.ajax = {
 
         // Le añadimos el Token de CSRF
         req.setRequestHeader('X-Vendimia-Security-Token', 
-            V.e("meta[name=Vendimia-security-token]").content);
+            V.e("meta[name=vendimia-security-token]").content);
 
 	    // La información va urlencodeadea
 	    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
