@@ -4,8 +4,9 @@ namespace Vendimia\ActiveRecord;
 use Vendimia;
 use Vendimia\Database;
 use Vendimia\Database\Helpers;
+use Vendimia\AsArrayInterface;
 
-class NonIterable extends \Exception {}
+class NonIterable extends Vendimia\Exception {}
 
 /**
  * Class for interact with one record in the database. Also, it's the base class
@@ -14,7 +15,7 @@ class NonIterable extends \Exception {}
  * The 'abstract' keyword is set for avoid direct instancing of this class.
  * This class must be extended into a Model class.
  */
-abstract class Record extends Base implements Vendimia\AsArrayInterface, \Iterator
+abstract class Record extends Base implements AsArrayInterface, \Iterator
 {
     use QueryBuilder, Relations, Configure;
 
@@ -102,6 +103,10 @@ abstract class Record extends Base implements Vendimia\AsArrayInterface, \Iterat
     {
         static::configure();
         $this->base_class = static::class;
+
+        if ($fields instanceof AsArrayInterface) {
+            $fields = $fields->asArray();
+        }
 
         if ($fields) {
             foreach($fields as $field => $value) {
