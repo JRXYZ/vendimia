@@ -51,13 +51,12 @@ class Url
         }
         foreach ($parts as $key => $data) {
 
-            // Si $key no es numérico, es un argumento
-            if (!is_numeric($key)) {
-                $this->args[$key] = urlencode($data);
-                continue;
-            }
-
             $value = null;
+
+            // Si $key es numérico, es un segmento. No lo usamos.
+            if (is_numeric($key)) {
+                $key = null;
+            }
 
             // Lo que queda debe ser partes de la URL
             if (is_object($data)) {
@@ -72,6 +71,7 @@ class Url
                 continue;
             } else {
                 // Aqui deberían llegar solo strings
+                $value = [];
                 foreach (explode('/', $data) as $part) {
                     $colonpos = strpos($part, ':');
                     $prepart = null;
@@ -81,13 +81,26 @@ class Url
                         if (!$app) { 
                             $app = Vendimia::$application;
                         }
-                        $value = $app;
-                        $this->parts[] = urlencode($value);
+                        $value[] = $app;
 
                         $part = substr($part, ++$colonpos);
-                    }
+                    } 
+                    $value[] = urlencode($part);
+                }
+            }
 
-                    $this->parts[] = urlencode($part);
+            if ($value) {
+                if ($key) {
+                    $this->args[$key] = $value;
+                } else {
+                    if (is_array($value)) {
+                        $this->parts = array_merge (
+                            $this->parts,
+                            $value
+                        );
+                    } else {
+                        $this->parts[] = $value;
+                    }
                 }
             }
         }
