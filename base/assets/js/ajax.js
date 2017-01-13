@@ -107,66 +107,18 @@ V.ajax = {
 	    // La información va urlencodeadea
 	    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    
-	    /*
-        // DEPRECATED
-        req.onreadystatechange = function (data) {
-
-	        if (this.readyState == 4) {
-                // Desactivamos el progress
-                V.ajax.progress ( false )
-	            try {
-                    if (JSON.parse) {
-                        data = JSON.parse ( this.responseText )
-                    } else {
-                        data = new Function('return ' + this.responseText + ';')();
-                    }
-
-	                // Nos fijamos si viene algun código de error
-	                switch ( data.__CODE ) {
-	                case -255: // Message
-	                    V.ajax.message (data.__MESSAGE)
-                        break
-                    case -65535:
-                        // Execption!
-                        d = V.c('div');
-                        d.style.position = 'fixed';
-                        d.style.top = "50px"
-                        d.style.left = "50px"
-                        d.style.width = (document.width - 100)  + "px"
-                        d.style.height = (document.height - 100) + "px"
-                        d.style.background = 'white'
-                        d.style.border = "1px solid black"
-                        d.style.padding = "10px";
-                        d.style.zIndex = "100";
-
-                        V.e('body').appendChild ( d )
-
-                        d.innerHTML = data.__MESSAGE
-
-                        console.log ( data.__MESSAGE )
-                        console.log ( d )
-                    }
-
-	                // retornamos el array data a la funcion callback
-	                callback (data);
-	                
-	                return;
-	            }
-	            catch (e) {
-	                //ajax.message ('¡Error inesperado!');
-
-	                console.log ('ERROR ' + e.name + ": " + e.message );
-	                console.log ( e.stack );
-	                console.log( {responseText : this.responseText});
-	                return;
-	            }
-	        }
-	    }*/
         req.onload = function() {
             try {
                 payload = JSON.parse(this.responseText)
             } catch (e) {
-                V.ajax.exception(e)
+                V.ajax.exception({
+                    'name': e.name,
+                    'message': e.message,
+                    'extra': {
+                        'responseText': this.responseText
+                    }
+                })
+                return
             }
 
             // Viene un código?
@@ -176,7 +128,7 @@ V.ajax = {
                 break
             case V.EXCEPTION:
                 V.ajax.exception(payload)
-                break
+                return 
             }
             // Ejecutamos el callback
             callback(payload)
@@ -189,12 +141,12 @@ V.ajax = {
 
 	post: function (url, vars, callback)
     {
-		V.ajax.call ( 'POST', url, vars, callback );
+		V.ajax.call ('POST', url, vars, callback);
 	},
 
 	get: function (url, vars, callback)
     {
-		V.ajax.call ( 'GET', url, vars, callback );
+		V.ajax.call ('GET', url, vars, callback);
 	},
 
     /**
