@@ -3,32 +3,32 @@ namespace Vendimia\Database\Mysql;
 
 use Vendimia\Database;
 use Vendimia\Database\ValueInterface;
-use Vendimia\Database\Fields;
+use Vendimia\Database\Field;
 use mysqli;
 
 class Connector implements Database\ConnectorInterface
 {
     const Fields = [
-        Fields::Bool => 'tinyint',
-        Fields::Byte => 'tinyint',
-        Fields::SmallInt => 'smallint',
-        Fields::Integer => 'int',
-        Fields::BigInt => 'bigint',
+        Field::Bool => 'tinyint',
+        Field::Byte => 'tinyint',
+        Field::SmallInt => 'smallint',
+        Field::Integer => 'int',
+        Field::BigInt => 'bigint',
 
-        Fields::Float => 'float',
-        Fields::Double => 'double',
-        Fields::Decimal => 'decimal',
+        Field::Float => 'float',
+        Field::Double => 'double',
+        Field::Decimal => 'decimal',
 
-        Fields::Char => 'varchar',
-        Fields::FixChar => 'char',
-        Fields::Text => 'text',
-        Fields::Blob => 'blob',
+        Field::Char => 'varchar',
+        Field::FixChar => 'char',
+        Field::Text => 'text',
+        Field::Blob => 'blob',
 
-        Fields::Date => 'date',
-        Fields::Time => 'time',
-        Fields::DateTime => 'datetime',
+        Field::Date => 'date',
+        Field::Time => 'time',
+        Field::DateTime => 'datetime',
 
-        Fields::ForeignKey => 'int',
+        Field::ForeignKey => 'int',
 
     ];
 

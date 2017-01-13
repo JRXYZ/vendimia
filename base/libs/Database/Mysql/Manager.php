@@ -2,7 +2,7 @@
 namespace Vendimia\Database\Mysql;
 
 use Vendimia\Database;
-use Vendimia\Database\Fields;
+use Vendimia\Database\Field;
 use Vendimia\Database\Tabledef;
 
 /**

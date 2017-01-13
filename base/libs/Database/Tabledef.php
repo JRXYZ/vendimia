@@ -1,6 +1,6 @@
 <?php
 namespace Vendimia\Database;
-use Vendimia\Database\Fields;
+use Vendimia\Database\Field;
 
 /**
  * Database table definition
@@ -57,7 +57,7 @@ abstract class Tabledef
             $fieldlength = join(',', $fieldlength);
 
             // Algunos campos _necesita_ una longitud
-            if (!$fieldlength && Fields::needLength($fieldtype)) {
+            if (!$fieldlength && Field::needLength($fieldtype)) {
                 throw new \RuntimeException("Field '$fieldname' needs a length.");
             }
 
@@ -133,7 +133,7 @@ abstract class Tabledef
         if (!$this->primary_keys) {
             $this->tabledef = array_merge([
                 'id' => [
-                    'type' => Fields::Integer,
+                    'type' => Field::Integer,
                     'auto_increment' => true,
                     'null' => false,
                     'default' => null,
