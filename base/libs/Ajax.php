@@ -80,7 +80,10 @@ class Ajax
             // __MESSAGE
 
             if (is_string ($return)) {
-                $return = ['__MESSAGE' => $return ];            
+                $return = ['__MESSAGE' => $return];
+            }
+            if ($return instanceof Vendimia\AsArrayInterface) {
+                $return = $return->asArray();
             }
 
             // Si existe un elemento con indice '0' en return, lo 
