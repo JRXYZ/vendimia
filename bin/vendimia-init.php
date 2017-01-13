@@ -278,20 +278,19 @@ The files 'Vendimia_default_header' and 'Vendimia_default_footer' are located in
 --------------------------------------------------------------------------------
 */
 
-// The 'Vendimia_default_header' view file contains all the standard HTML headers, 
-// up to the <body> tag. 
+// The 'vendimia_default_header' view file contains all the standard HTML 
+// headers, up to the <body> tag. 
 \$this->insert('vendimia_default_header');
 
-// The 'Vendimia_message' view file contains the message <div> tag for the 
-// Vendimia\\Message::message(), Vendimia\\Message::warning() and 
-// Vendimia\\Message::error() functions.
+// The 'vendimia_message' view file contains the message <div> tag for the 
+// Vendimia\\Message functions, like message() o warning().
 \$this->insert('vendimia_messages');
 
 // This draws the actual view. If you create your own layout, 
 // make sure you put this method with no parameters.
 \$this->content();
 
-// The 'Vendimia_default_footer' contains a small footer, and the </body> and 
+// The 'vendimia_default_footer' contains a small footer, the </body> and 
 // </html> closing tags.
 \$this->insert('vendimia_default_footer');
 EOF;
