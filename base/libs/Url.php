@@ -84,6 +84,9 @@ class Url
                         $value[] = $app;
 
                         $part = substr($part, ++$colonpos);
+                        if ($part == "") {
+                            continue;
+                        }
                     } 
                     $value[] = urlencode($part);
                 }
