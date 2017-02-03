@@ -273,8 +273,8 @@ $default_layout = <<<EOF
 Basic default view layout. When you modify this layout, or create a new one, 
 remember to add at least this "\$this->content()" instruction on it.
 
-The files 'Vendimia_default_header' and 'Vendimia_default_footer' are located in the 
-'base/views' directory inside the Vendimia installation path.
+The files 'vendimia_default_header' and 'vendimia_default_footer' are located in
+the 'base/views' directory inside the Vendimia installation path.
 --------------------------------------------------------------------------------
 */
 
@@ -297,7 +297,7 @@ EOF;
 Cli\fileSave('base/views/layouts/default.php', $default_layout, $target_dir);
 
 $git = <<<EOF
-# Files we don't want on our production server, if you use GIT VCS
+# Files we don't want in our production server, if you use GIT VCS
 
 tmp/
 cache/
