@@ -62,7 +62,7 @@ class $classname extends Form
 {
 EOF;
 
-foreach ( $fields as $field => $type ) {
+if ($fields) foreach ($fields as $field => $type) {
     $form .= <<<EOF
     var \$$field = [Control\\{$type}::class,
         // Extra options for $field
@@ -70,6 +70,8 @@ foreach ( $fields as $field => $type ) {
     ];
 
 EOF;
+} else {
+    $form .= "\n\n";
 }
 $form .= '}';
 
