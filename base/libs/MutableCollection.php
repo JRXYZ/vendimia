@@ -4,7 +4,7 @@ namespace Vendimia;
 /**
  * Mutable collection. Every method modifies the array in-place.
  */
-class MutableCollection implements \ArrayAccess
+class MutableCollection implements \ArrayAccess, \Iterator, \Countable
 {
     private $array = [];
 
@@ -55,17 +55,48 @@ class MutableCollection implements \ArrayAccess
 
 
     /**
-     * Returns whether this element exist in the collection
+     * Returns whether this key exist in the collection
      */
-    public function has($element)
+    public function has($key)
     {
         if (is_null($this->array)) {
             return false;
         }
         
-        return key_exists($element, $this->array);
+        return key_exists($key, $this->array);
     }
 
+    /**
+     * Remove an element by its key
+     */
+    public function remove($key) 
+    {
+        unset($this->array[$key]);
+    }
+
+    /**
+     * Remove and returns the first element.
+     */
+    public function shift()
+    {
+        return array_shift($this->array);
+    }
+
+    /**
+     * Remove and returns the first element, in format [key, value];
+     */
+    public function shift_assoc()
+    {
+        reset ($this->array);
+        $key = key($this->array);
+        if (is_null($key)) {
+            return null;
+        }
+        
+        $value = $this->array[$key];
+        unset($this->array[$key]);
+        return [$key, $value];
+    }
 
     /**
      * Magic function for accessing elements as object properties
@@ -79,11 +110,33 @@ class MutableCollection implements \ArrayAccess
         return $this;
     }
 
-    
+
+    /**
+     * Magic function helper for serialize this Collection
+     */
+    public function __sleep() 
+    {
+        return ["array"];
+    }
+
+    /**
+     * Magic function helper for unserialize a serialized Collection.
+     */
+    public function __wakeup()
+    {
+
+    }
+
+    /**
+     * Shortcut to $this->get
+     */
+    public function __invoke($element)
+    {
+        return $this->get($element);
+    }
 
 
     // ArrayAccess implementation
-
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -98,4 +151,32 @@ class MutableCollection implements \ArrayAccess
         $this->add($value, $offset);
     }
     public function offsetUnset($offset) {}
+
+    // Iterator implementation
+    public function current() 
+    {
+        return current($this->array);
+    }
+    public function key()
+    {
+        return key($this->array);
+    }
+    public function next() 
+    {
+        next($this->array);
+    }
+    public function rewind()
+    {
+        reset($this->array);
+    }
+    public function valid()
+    {
+        return current($this->array) !== false;
+    }
+
+    // Countable implementation
+    public function count() 
+    {
+        return count($this->array);
+    }
 }
