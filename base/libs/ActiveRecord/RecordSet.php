@@ -114,21 +114,66 @@ class RecordSet extends Base implements \Iterator
     }
 
     /**
+     * Executes a single SQL function on a field.
+     *
+     * 
+     *
+     * @param string $function SQL function
+     * @param string $field Field name where to execute the function
+     */
+    private function executeFunction($function, $field = '*') 
+    {
+        $target = clone $this;
+        $class = $target->base_class;
+
+        $target->query['fields'] = ["{$function}({$field})" => "__vendimia_function_result"];
+        $cursor = $target->executeQuery();
+        
+        $data = $class::$connection->fetchOne($cursor);
+
+        return $data['__vendimia_function_result'];
+
+    }
+
+    /**
+     * Returns the max value for a field in this RecordSet
+     *
+     * @param string $field Field name for finding the max value.
+     */
+    public function max($field) 
+    {
+        return $this->executeFunction('max', $field);
+    }
+
+    /**
+     * Returns the min value for a field in this RecordSet
+     *
+     * @param string $field Field name for finding the min value.
+     */
+    public function min($field) 
+    {
+        return $this->executeFunction('min', $field);
+    }
+
+    /**
+     * Returns the average value for a field in this RecordSet
+     *
+     * @param string $field Field name for finding the average value.
+     */
+    public function avg($field) 
+    {
+        return $this->executeFunction('avg', $field);
+    }
+
+
+    /**
      * Counts the total records from this recordset using the database
      *
      * @return int Record count.
      */
     public function count()
     {
-        $target = clone $this;
-        $class = $target->base_class;
-
-        $target->query['fields'] = ['COUNT(*)' => "__vendimia_count"];
-        $cursor = $target->executeQuery();
-        
-        $data = $class::$connection->fetchOne($cursor);
-
-        return intval($data['__vendimia_count']);
+        return intval($this->executeFunction('count'));
     }
 
     /**
