@@ -92,7 +92,7 @@ class RecordSet extends Base implements \Iterator
     public function add(...$records) 
     {
         if (is_null($this->fk_model)) {
-            // one-to-many. A cada registro le añadimos el foreing key
+            // one-to-many. A cada registro le añadimos el foreign key
             foreach ($records as $record) {
                 $record->update([
                     $this->fk_name => $this->fk_value

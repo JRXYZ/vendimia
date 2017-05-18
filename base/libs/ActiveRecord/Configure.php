@@ -145,8 +145,8 @@ trait Configure
                             break;
                     }
 
-                    if (!isset($options['foreing_key'])) {
-                        $options['foreing_key'] = $fk_name;
+                    if (!isset($options['foreign_key'])) {
+                        $options['foreign_key'] = $fk_name;
                     }
 
                     if (!isset($options['primary_key'])) {
@@ -162,7 +162,6 @@ trait Configure
                     //$options['foreign_model'] = $fk_model;
 
                     // TODO: Through
-
                     $relations [$field_name] = $options;
                 }
             }

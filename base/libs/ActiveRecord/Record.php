@@ -99,7 +99,7 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
     /**
      * Construct a record.
      */
-    public function __construct($fields = null)
+    public function __construct($fields = null, $not_new = false)
     {
         static::configure();
         $this->base_class = static::class;
@@ -112,6 +112,12 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
             foreach($fields as $field => $value) {
                 $this->$field = $value;
             }
+        }
+
+        if ($not_new) {
+            $this->is_new = false;
+            $this->query_executed = true;
+            $this->buildRelations();
         }
     }
 
@@ -142,8 +148,8 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
                     $this->object_fields[$field] = $value;
 
                     if ($rel['fk_location'] == self::FK_THIS) {
-                        $this->fields[$rel['foreing_key']] = $value->pk();
-                        $this->modified_fields[$rel['foreing_key']] = true;
+                        $this->fields[$rel['foreign_key']] = $value->pk();
+                        $this->modified_fields[$rel['foreign_key']] = true;
                     } else {
                         // Para FK_OTHER, necesitamos que 
                         // this->{option[primary_key]} exista
@@ -151,7 +157,7 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
                             throw new \RuntimeException("Can't assign a 'has_one' field on a unsaved model.");
                         }
 
-                        $value->{$rel['foreing_key']} = $this->pk();
+                        $value->{$rel['foreign_key']} = $this->pk();
                         $value->save();
                     }
                     return;
@@ -305,6 +311,10 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
         if (method_exists($this, 'afterSave')) {
             $this->afterSave();
         }
+
+        // Ejecutamos las relaciones. Esto más es útil cuando creas un 
+        // objeto nuevo, para que sus relaciones foráneas tengan un objeto
+        $this->buildRelations();
         return $this;
     }
 
@@ -396,8 +406,7 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
         // Modificamos o borramos los registros relacionados
         foreach (static::$relations as $field => $rel) {
             // Solo trabajamos con has_one o has_many
-            vardump($rel);
-            if ($rel['fk_location'] == static::FK_OTHER) {
+            if ($rel['fk_location'] == static::FK_REL) {
                 continue;
             }
 
@@ -414,13 +423,10 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
                 case 'null';
                     // Actualizamos el campo 
                     $this->field->update([
-                        $rel['foreing_key'] => null,
+                        $rel['foreign_key'] => null,
                     ]);
             }
         }
-
-        return;
-
         $where = $this->buildWhere([
             static::$primary_key => $this->pk()
         ]);
@@ -436,6 +442,11 @@ abstract class Record extends Base implements AsArrayInterface, \Iterator
      */
     public function __set($field, $value)
     {
+        // Antes de colocar un valor, nos fijamos que tengamos los valores
+        // de la base de datos, de ser necesario. De lo contrario, si 
+        // ejecutamos luego un __get, puede sobreescribirlos.
+        $this->retrieveRecord();
+
         $this->setFieldValue($field, $value);
 
         // Guardamos el campo en una lista, para el save()

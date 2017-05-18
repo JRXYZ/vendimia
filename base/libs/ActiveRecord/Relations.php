@@ -26,10 +26,10 @@ trait Relations
             // Segun el lugar de la llave foránea, creamos el objeto
             if ($options['fk_location'] == self::FK_THIS) {
                 // Si existe la llave foranea, y tiene un valor
-                if (isset($this->fields[$options['foreing_key']])) {
+                if (isset($this->fields[$options['foreign_key']])) {
                     if ($options['rel_type'] == 'one') {
                         $object  = $target_class::get(
-                            $this->fields[$options['foreing_key']]
+                            $this->fields[$options['foreign_key']]
                         );
                     } else {
                         throw new \LogicException ("UNIMPLEMENTED FK_THIS with 'many'");
@@ -46,11 +46,14 @@ trait Relations
                 // La llave foránea está en el target_class
                 if ($options['rel_type'] == 'one') {
                     $object = $target_class::get([
-                        $options['foreing_key'] => $this->fields[$options['primary_key']]
+                        $options['foreign_key'] => $this->fields[$options['primary_key']]
                     ]);
                 } else {
-                    $object = new RecordSet($target_class, 
-                        [$options['foreing_key'] => $this->fields[$options['primary_key']]]);
+                    $object = new RecordSet($target_class);
+                    $object->setRelationship(
+                        $options['foreign_key'], 
+                        $this->fields[$options['primary_key']]
+                    );
                 }
 
 
