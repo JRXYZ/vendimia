@@ -21,11 +21,14 @@ class Html {
     /** Javascripts, all loaded in one SCRIPT tag. */
     private $script = [];
 
-    /** External Javascript sources, each with its own SCRIPT tag. */
+    /** External Javascript sources */
     private $external_scripts = [];
 
-    /** CSS assets, all loaded in one LINK tag */
+    /** CSS assets */
     private $css = [];
+
+    /** External CSS sources */
+    private $external_css = [];
 
     /**
      * Add one or more CSS style
@@ -33,6 +36,14 @@ class Html {
     public function addCss(...$assets)
     {
         $this->css = array_merge ($this->css, $assets);
+    }
+
+    /**
+     * Add one or more CSS style
+     */
+    public function addExternalCss(...$assets)
+    {
+        $this->external_css = array_merge($this->external_css, $assets);
     }
 
     /**
@@ -111,6 +122,10 @@ class Html {
             }
             $this->meta[$type] = $attr;
         } else {
+            if (!is_array($attr)) {
+                throw new \RuntimeException("\$attr must be a Array with name => content.");
+            }
+
             foreach ($attr as $var => $val) {
                 $this->meta[$type][$var] = $val;
             }
@@ -155,6 +170,15 @@ class Html {
             'href' => (new Compiler('css', Asset::buildUri($this->css)))->url(),
             'type' => 'text/css',
         ];
+
+        // Y los links para los CSS externos
+        foreach ($this->external_css as $external) {
+            $this->link[] = [
+                'rel' => 'stylesheet',
+                'href' => $external,
+                'type' => 'text/css',
+            ];
+        }
 
         foreach ($this->link as $link) {
             $html[] = Html\Tag::link($link)->get();
