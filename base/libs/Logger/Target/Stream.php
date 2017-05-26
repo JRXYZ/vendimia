@@ -15,8 +15,8 @@ class Stream extends TargetBase implements TargetInterface
     }
 
     public function write($message, array $context) {
-        $f = fopen ($this->stream, $this->mode);
-        fwrite ($f, $this->formatter->format($message, $context) . PHP_EOL);
+        $f = fopen($this->stream, $this->mode);
+        fwrite($f, $this->formatter->format($message, $context) . PHP_EOL);
         fclose($f);
     }
 }

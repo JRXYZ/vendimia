@@ -40,7 +40,7 @@ class Html {
      */
     public function prependCss(...$assets)
     {
-        $this->css = array_merge ($assets, $this->css);
+        $this->css = array_merge($assets, $this->css);
     }
 
     /**

@@ -4,10 +4,11 @@ namespace Vendimia\Form;
 /**
  * Filters for control input.
  *
- * You can use any PHP internal function who accepts one parameter
- * and returns a string, as a filter. Just write its name as a 
- * string. You can also use these constants as a syntax-highlighted 
- * version of those.
+ * You can use any PHP internal function as a filter. This function
+ * must accept one string param and returns a string.
+ *
+ * You can also use these constants as a syntax-highlighted version of 
+ * those.
  */
 class Filter
 {

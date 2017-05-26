@@ -7,10 +7,10 @@ use Psr\Http\Message\ServerRequest;
 
 class Request extends ServerRequest
 {
-    /** Vendimia\ArrayAccess object to GET values */
+    /** Vendimia\Collection object to GET values */
     public $get; 
 
-    /** Vendimia\ArrayAccess object to POST values */
+    /** Vendimia\Collection object to POST values */
     public $post; 
 
     /**
@@ -62,8 +62,7 @@ class Request extends ServerRequest
             -> setRequestTarget($request_target)
         ;
 
-        // Pasamos las variables
-        // Colocamos todas las cabeceras
+        // Colocamos sólo las cabeceras reales, en su formato original
         foreach($_SERVER as $var => $val) {
             if (substr($var, 0, 5) == 'HTTP_') {
                 $var = strtr(strtolower(substr($var, 5)), '_', '-');

@@ -21,7 +21,7 @@ namespace Vendimia\Database;
  *
  * A 'index' option with 'true' will create a non-unique index for this field.
  
- * If the 'index' option is an array, these options area available:
+ * If the 'index' option is an array, these options are available:
  *      name:           Name of the index, used for multiple field indexes.
  *      unique:         true if this index must have the 'unique' constrain.
  *
@@ -51,7 +51,7 @@ interface ManagerInterface
     public function parseTabledef($tabledef);
 
     /**
-     * Reads and process a table structure and indexes from the database, 
+ |    * Reads and process a table structure and indexes from the database, 
      *
      * @return array Array with [Vendimia table structure, indexes, primary keys]
      */

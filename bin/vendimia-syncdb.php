@@ -45,8 +45,7 @@ if ($argv) {
 // Empezamos.
 try {
     $manager = Database::getManager();
-}
-catch (RuntimeException $e) {
+} catch (RuntimeException $e) {
     Console::fail($e->getMessage());
 }
 

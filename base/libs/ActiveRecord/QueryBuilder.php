@@ -81,7 +81,6 @@ trait QueryBuilder
         $class = $this->base_class;
 
         $class::configure();
-
         $connector = $class::$connection;
 
         // Cada uno de los pedazos, en formato [glue, not, where]
@@ -331,12 +330,11 @@ trait QueryBuilder
     }
 
     /**
-     * Adss an LIMIT ofset portion
+     * Adds an LIMIT offset portion
      */
     public function offset($offset)
     {
         $this->query['offset'] = $offset;
         return $this;
     }
-
 }

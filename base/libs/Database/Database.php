@@ -60,6 +60,6 @@ class Database
             $connection = self::$default_connection;
         }
         $class = __NAMESPACE__ . '\\' . self::$connections[$connection]['type'] . "\\Manager";
-        return new $class( self::$connections[$connection]['object']);
+        return new $class(self::$connections[$connection]['object']);
     }
 }

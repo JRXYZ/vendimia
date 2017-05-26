@@ -177,9 +177,6 @@ class Php implements \ArrayAccess
         return Vendimia\Url::parse(Vendimia::$settings['static_url'], $url);
     }
 
-
-
-    // ArrayAccess implementation
     public function offsetExists($offset) 
     {
         return key_exists($offset, $this->variables);
