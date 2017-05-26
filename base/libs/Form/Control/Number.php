@@ -6,7 +6,7 @@ class Number extends Text
     function draw() {
         return parent::draw([
             'type' => 'number',
-            'value' => '',
+            'value' => $this->value,
         ]);
     }    
    
