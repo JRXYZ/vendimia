@@ -10,7 +10,7 @@ class Form extends Form\Form
 {
     public function __construct()
     {
-        parent::__construct(new Csrf);
+        parent::__construct(Vendimia::$csrf);
     }
 
     /**

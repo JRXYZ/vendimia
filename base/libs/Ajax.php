@@ -23,7 +23,7 @@ class Ajax
             == 'XmlHttpRequest' 
             && 
             Vendimia::$request->getHeaderLine('X-Vendimia-Security-Token') 
-            == (new Csrf)->getSavedToken()){
+            == Vendimia::$csrf->getToken()){
 
             return true;
         }
