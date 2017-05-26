@@ -38,8 +38,8 @@ class Vendimia
     /** Debug state */
     static public $debug = false;
 
-    /** POST security token, for preventing CSRF */
-    static public $security_token;
+    /** CSRF object */
+    static public $csrf;
 
     /** Service container*/ 
     static public $services = null;
@@ -94,8 +94,12 @@ class Vendimia
         // Sesión
         self::$session = new Vendimia\Session;
 
+        // Protección contra csrf
+        self::$csrf = new Vendimia\Csrf;
+
         // Service container
         self::$services = new Vendimia\ServiceContainer;
+
 
         // Creamos un logger por defecto
         self::$services->bind('Vendimia.Logger', function() {

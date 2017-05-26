@@ -12,10 +12,4 @@ interface CsrfInterface
      * Obtains the generated token
      */
     public function getToken();
-
-    /**
-     * Returns the saved CSRF token
-     */ 
-    public function getSavedToken();
 }
-

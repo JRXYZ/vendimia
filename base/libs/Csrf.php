@@ -6,7 +6,7 @@ use Vendimia;
 class Csrf implements CsrfInterface
 {
     /** Generated CSRF token */
-    static $token = null;
+    private $token = null;
 
     public function generateToken()
     {
@@ -19,24 +19,21 @@ class Csrf implements CsrfInterface
             $token .= $letters{rand(0, $lc)};
         }
 
-        static::$token = $token;
-        Vendimia::$security_token = $token;
-        Vendimia::$session->security_token = $token;
         return $token;
     }
 
     public function getToken()
     {
-        if (is_null(static::$token)) {
-            return $this->generateToken();
-        } else {
-            return static::$token;
-        }
+        return $this->token;
     }
 
-    public function getSavedToken()
+    public function __construct() 
     {
-        // Debería de existir...
-        return Vendimia::$session->security_token;
+        if (is_null(Vendimia::$session->security_token)) {
+            $this->token = $this->generateToken();
+            Vendimia::$session->security_token = $this->token;
+        } else {
+            $this->token = Vendimia::$session->security_token;
+        }
     }
 }

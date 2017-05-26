@@ -496,7 +496,7 @@ class Form implements AsArrayInterface
         // Validamos el CSRF
         if (!$this->getProperty('disable_csrf')) {
             if (!isset($this->form_csrf) || 
-                $this->form_csrf != $this->csrf->getSavedToken()) {
+                $this->form_csrf != $this->csrf->getToken()) {
 
                 return false;
             }
