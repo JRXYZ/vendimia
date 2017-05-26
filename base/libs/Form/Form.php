@@ -414,6 +414,18 @@ class Form implements AsArrayInterface
     }
 
     /**
+     * Draw this form with <tr>, <th> y <td>
+     */
+    public function drawAsTable(...$control_list)
+    {
+        $this->properties['html']['control_block'] = ['tr'];
+        $this->properties['html']['label_block'] = ['th'];
+        $this->properties['html']['widget_block'] = ['td'];
+        
+        return $this->draw(...$control_list);
+    }
+
+    /**
      * Draws the <FORM> open tag with POST method
      */
     public function begin($method = 'post', $extra = [])
