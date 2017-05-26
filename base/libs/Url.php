@@ -49,8 +49,8 @@ class Url
         if (count($parts) == 1 && is_array($parts[0])) {
             $parts = $parts[0];
         }
-        foreach ($parts as $key => $data) {
 
+        foreach ($parts as $key => $data) {
             $value = null;
 
             // Si $key es numérico, es un segmento. No lo usamos.
@@ -66,33 +66,49 @@ class Url
                     $value = (string)$data;
                 }
             } elseif (is_array($data)) {
-                // Recursión
-                $this->processParts($data);
-                continue;
+                // Recursión, solo si es un segmento
+                if (is_null($key)) {
+                    $this->processParts($data);
+                    continue;
+                }
+                else {
+                    // De lo contrario, lo usamos como parámetros
+                    $value = $data;
+                }
             } else {
                 // Aqui deberían llegar solo strings
-                $value = [];
-                foreach (explode('/', $data) as $part) {
-                    $colonpos = strpos($part, ':');
-                    $prepart = null;
 
-                    if ($colonpos !== false) {
-                        $app = substr($part, 0, $colonpos);
-                        if (!$app) { 
-                            $app = Vendimia::$application;
-                        }
-                        $value[] = $app;
+                // Si estamos definiendo un parámetro, entonces
+                // no procesamos el string
+                if (!is_null($key)) {
+                    $value = $data;
+                }
+                else {
+                    $value = [];
+                    foreach (explode('/', $data) as $part) {
+                        $colonpos = strpos($part, ':');
+                        $prepart = null;
 
-                        $part = substr($part, ++$colonpos);
-                        if ($part == "") {
-                            continue;
-                        }
-                    } 
-                    $value[] = urlencode($part);
+                        if ($colonpos !== false) {
+                            $app = substr($part, 0, $colonpos);
+                            if (!$app) { 
+                                $app = Vendimia::$application;
+                            }
+                            $value[] = $app;
+
+                            $part = substr($part, ++$colonpos);
+                            if ($part == "") {
+                                continue;
+                            }
+                        } 
+                        $value[] = urlencode($part);
+                    }
                 }
             }
 
             if ($value) {
+                // Si está definido $key, entonces en un parámetro
+                // en la URL
                 if ($key) {
                     $this->args[$key] = $value;
                 } else {
@@ -116,9 +132,7 @@ class Url
     {
         if ($this->schema) {
             // Absoluto
-            //$url = 
             array_unshift($this->parts, $this->schema);
-            
         } else {
             // Relativo
             array_unshift($this->parts, rtrim(Vendimia::$base_url, '/.'));
@@ -126,7 +140,6 @@ class Url
 
 
         $url = join('/', $this->parts);
-
         if ($this->args) {
             $url .= '?' . http_build_query($this->args);
         }
