@@ -111,7 +111,7 @@ trait QueryBuilder
                                 throw new \RuntimeException("'$key' value object (".get_class($value) . ") must be an instance of Vendimia\\ActiveRecord\\Comparison or implements interface Vendimia\\Database\\ValueInterface, to be used here.");
                             }
                         } else {
-                            $w .= '=' . $connector->escape($value);
+                            $w .= '=' . $connector->valueFromPHP($value);
                         }
                     }
                     $where[] = ['AND', false, $w];
