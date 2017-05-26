@@ -167,7 +167,7 @@ V = {
      * Hace una confirmación antes de redirigir
      */
     redirect_confirm: function (message, url, method, vars) {
-        if (window.confirm ( message) ) {
+        if (window.confirm(message)) {
             this.redirect (url, method, vars);
         }
     },
@@ -203,4 +203,4 @@ V = {
         return [r['left'] + window.pageXOffset, r['top'] + window.pageYOffset]
     },
 
-}
+};
