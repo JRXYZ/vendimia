@@ -22,8 +22,9 @@ class Helpers
         $connector = Database::getConnector();
 
         $connector->startTransaction();
+        $returnvalue = null;
         try {
-            $callback();
+            $returnvalue = $callback();
         } catch (Exception $e) {
             // Cualquier excepcion genera un rollback
             $connector->rollbackTransaction();
@@ -31,5 +32,7 @@ class Helpers
             throw $e;
         }
         $connector->commitTransaction();
+
+        return $returnvalue;
     }
 }
