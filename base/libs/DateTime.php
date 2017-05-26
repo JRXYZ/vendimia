@@ -321,6 +321,14 @@ class DateTime implements Database\ValueInterface
         return new static($interval, true);
     }
 
+    /**
+     * Returns the date part.
+     */
+    public function getDate($format = 'Y-m-d')
+    {
+        return $this->format($format);
+    }
+
     function __get ($var)
     {
         // Removemos el plural
