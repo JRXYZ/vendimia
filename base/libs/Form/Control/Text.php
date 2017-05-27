@@ -39,7 +39,7 @@ class Text extends ControlAbstract
 
         if ($this->multiline) {
             $tag = 'textarea';
-            $tag_opts = [
+            $options = [
                 'escapecontent' => false,
                 'closetag' => true,
             ];
