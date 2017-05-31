@@ -33,7 +33,7 @@ class Ajax
     /**
      * Creates a JSON Request and sends to the browser
      */
-    public static function return($code, $data = [])
+    public static function send($code, $data = [])
     {
         $data['__CODE'] = $code;
         $json_data = json_encode($data);
@@ -47,7 +47,7 @@ class Ajax
      */
     public static function message($message, $title = '') 
     {
-        self::return(self::MESSAGE, [
+        self::send(self::MESSAGE, [
             '__MESSAGE' => $message,
             '__TITLE' => $title,
         ]);
@@ -94,7 +94,7 @@ class Ajax
                 unset ($return[0]);
             }
 
-            self::return($return_code, $return);
+            self::send($return_code, $return);
         }
 
         // Aquí finaliza la ejecución
