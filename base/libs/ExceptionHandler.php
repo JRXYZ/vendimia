@@ -65,6 +65,9 @@ class ExceptionHandler
      */
     public static function handleAjax($exception)
     {
-        Ajax::message(Ajax::EXCEPTION, "boom");
+        Ajax::send(Ajax::EXCEPTION, [
+            'name' => get_class($exception),
+            'message' => $exception->getMessage(), 
+        ]);
     }
 }
